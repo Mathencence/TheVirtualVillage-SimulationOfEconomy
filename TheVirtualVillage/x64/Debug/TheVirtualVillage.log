@@ -1,2 +1,3 @@
-﻿  TheVirtualVillage.cpp
+﻿  main.cpp
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\main.cpp(23,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   TheVirtualVillage.vcxproj -> C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\x64\Debug\TheVirtualVillage.exe

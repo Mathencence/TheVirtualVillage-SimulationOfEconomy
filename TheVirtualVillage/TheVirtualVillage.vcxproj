@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{9de223fc-9f3e-416f-9e0e-936b60476bbc}</ProjectGuid>
+    <ProjectGuid>{e0a001bd-eaef-40f7-919f-ca19633b2745}</ProjectGuid>
     <RootNamespace>TheVirtualVillage</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -127,7 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="TheVirtualVillage.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\AGD_GameLoop\AGD_GameLoop\Vector.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Environment.h" />
+    <ClInclude Include="Simulation.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
