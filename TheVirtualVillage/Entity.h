@@ -1,6 +1,17 @@
 #pragma once
 #include "Vector.h"
-
+#include "Gene.h"
+//Entity is usually related to villagers in this environment
+enum intention
+{
+	//Intention
+	GATHER,
+	PURCHASE,
+	SELL,
+	REPRODUCE,
+	WANDER,
+	REST,
+};
 class Entity
 {
 public:
@@ -12,7 +23,15 @@ public:
 	// And bouncing the mushroom against the window limits.
 	// This fucntions returns void and receives no parameters.
 	void update();
-	// Draw the sprite onscreen
-	//void draw();
+	//Getter and Setter
+	Vector getPosition() {return position;}
+	void setPosition(Vector v) {position=v;}
 private:
+	Vector position;
+	Gene gene;
+
+	intention decide();
+	void move(intention intention);
+	void action(intention intention);
+	
 };

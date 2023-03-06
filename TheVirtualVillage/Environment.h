@@ -2,6 +2,9 @@
 #include "Vector.h"
 #include "Entity.h"
 #include <vector>
+
+//The environment would be a village that contains villagers (agents) to interact
+//The environment is a map hold certain special areas and every agent need to have a valid position to project the entity on the map
 class Environment
 {
 public:

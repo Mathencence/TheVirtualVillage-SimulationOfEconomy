@@ -20,12 +20,23 @@ using namespace std;
 int main()
 {
     //Generate a random seed
-    srand(time(NULL));
+    srand(time(nullptr));
     //Declare an object of type "Game"
     //Simulation sim(); //nEntites
-
     //i_Fps = simpleLoop(&game);
     //printf("\nAverageFps:%d\n", i_AvgFps);
-    printf("Helloworld\n");
+    Gene g = Gene();
+    g.randomize();
+    vector<float> v = g.getAlleleSet(INTENTION);
+    for (int i = 0; i < v.size(); i++) {
+        printf("%f ",v.at(i));
+    }
+    printf("\n");
+    vector<float> v2 = g.getAlleleSet(PHYSIQUE);
+    for (int i = 0; i < v2.size(); i++) {
+        printf("%f ", v2.at(i));
+    }
+    Simulation sim = Simulation();
+    //sim.logData();
     return 0;
 }
