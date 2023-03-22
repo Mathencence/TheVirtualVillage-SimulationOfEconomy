@@ -2,8 +2,20 @@
 
 
 Simulation::Simulation(){
+    Environment env = Environment();
 }
 Simulation::~Simulation(){
+}
+void Simulation::consoleData(Gene g) {
+    vector<float> v = g.getAlleleSet(INTENTION);
+    for (int i = 0; i < v.size(); i++) {
+        printf("%f ", v.at(i));
+    }
+    printf("\n");
+    vector<float> v2 = g.getAlleleSet(PHYSIQUE);
+    for (int i = 0; i < v2.size(); i++) {
+        printf("%f ", v2.at(i));
+    }
 }
 void Simulation::logData(){
     std::time_t t = std::time(nullptr); // get current time

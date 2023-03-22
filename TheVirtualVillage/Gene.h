@@ -3,6 +3,8 @@
 enum alleleType {
 	INTENTION,
 	PHYSIQUE,
+	ITEM_PREF,
+	ALLELETYPE_LENGTH
 };
 enum allele
 {
@@ -14,15 +16,26 @@ enum allele
 	PREF_WANDER,
 	PREF_REST,
 	//Physique
+	THRIST,
+	HUNGER,
+	SPEED,
 	LIFESPAN,
+	//Item prefence
+	PREF_APPLE,
+	PREF_MEAT,
+	PREF_ROCK,
+	PREF_IRON,
+	PREF_WOOD,
+	PREF_WATER,
+	PREF_FISH,
 	//Number of allele
-	TOTALLENGTH,
+	ALLELE_LENGTH,
 };
 
 class Gene {
 private:
-	int totalLength = TOTALLENGTH;
-	int offset[TOTALLENGTH] = {PREF_REST,LIFESPAN};
+	int totalLength = ALLELE_LENGTH;
+	int offset[ALLELETYPE_LENGTH] = {PREF_REST,LIFESPAN,PREF_FISH};
 	vector<float> chromsome;
 public:
 	Gene() {//Default constructor
@@ -45,7 +58,7 @@ public:
 	vector<float> getAlleleSet(alleleType type) {
 		vector<float> v;
 		int i = 0;
-		if (type != INTENTION)
+		if (type != (alleleType)0)
 			i = offset[type - 1] + 1;
 		for (i; i <=offset[type];i++)
 		{

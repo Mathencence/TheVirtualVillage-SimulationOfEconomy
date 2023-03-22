@@ -19,6 +19,7 @@ public:
 	void logData();
 	// Declare a function for rendering the env to the screen. Returns void and receives no parameters.
 	// void render();
+	void consoleData(Gene g);
 private:
 	const std::string pathOfLog = "./log/";
 };
