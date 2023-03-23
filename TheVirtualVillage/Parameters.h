@@ -1,4 +1,7 @@
 #pragma once
+#define WIN_WIDTH 800
+#define WIN_HEIGHT 600
+
 #define MAPSIZE 1000
 #define MIN_LOCATION_RADIUS	10
 #define MAX_LOCATION_RADIUS	100

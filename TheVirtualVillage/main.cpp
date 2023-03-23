@@ -1,5 +1,6 @@
 #include <iostream>
 #include <time.h>
+#include <SFML/Graphics.hpp>
 #include "Simulation.h"
 using namespace std;
 
@@ -24,6 +25,33 @@ int main()
     Simulation sim = Simulation();
     //sim.consoleData(g);
     //sim.logData();
+    sf::RenderWindow* rw = sim.getRW();
+    while(rw->isOpen())
+    {
+        // handle events
+        sf::Event event;
+        while (rw->pollEvent(event))
+        {
+            // check the type of the event
+            switch (event.type)
+            {
+                // window closed
+            case sf::Event::Closed:
+                rw->close();
+                break;
+
+                // key pressed
+            case sf::Event::KeyPressed:
+                // handle the key press event
+                break;
+
+                // handle other events...
+
+            default:
+                break;
+            }
+        }
+    }
 
     return 0;
 }

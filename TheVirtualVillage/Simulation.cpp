@@ -2,7 +2,8 @@
 
 
 Simulation::Simulation(){
-    Environment env = Environment();
+    this->env = new Environment();
+    this->rw = this->env->getWindow()->getRWin();
 }
 Simulation::~Simulation(){
 }

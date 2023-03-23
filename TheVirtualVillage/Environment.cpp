@@ -1,6 +1,9 @@
 #include "Environment.h"
 
 Environment::Environment():border(MAPSIZE,MAPSIZE) {
+	window.setSize(sf::Vector2u(WIN_WIDTH, WIN_HEIGHT));
+	window.setTitle("Virtual-Village");
+	window.redraw();
 	//Generate some location
 	for (int i = 0; i < LOCATION_LENGTH; i++)
 	{

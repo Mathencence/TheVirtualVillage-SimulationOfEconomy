@@ -1,9 +1,10 @@
 #pragma once
+#include "Window.h"
+
 #include "Vector.h"
 #include "Entity.h"
 #include "Item.h"
 #include <vector>
-
 #include "Parameters.h"
 enum location {
 	PORTABLEWATER,
@@ -33,11 +34,14 @@ public:
 	
 	bool isInside(Vector pos);
 
+	Window* getWindow() { return &window; }
 	//Return the value of Environment state s
 	float getState(state s);
 	//Set the value of Environment state s
 	void setState(state s, float value);
 private:
+	Window window;
+
 	vector<float> envState;
 	//The map is a square start from 0,0, to the point border.
 	Vector border;
