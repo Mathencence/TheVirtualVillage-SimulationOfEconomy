@@ -1,6 +1,8 @@
 #include "Environment.h"
 
+
 Environment::Environment():border(MAPSIZE,MAPSIZE) {
+	//Initialize window
 	window.setSize(sf::Vector2u(WIN_WIDTH, WIN_HEIGHT));
 	window.setTitle("Virtual-Village");
 	window.redraw();
@@ -21,6 +23,7 @@ Environment::Environment():border(MAPSIZE,MAPSIZE) {
 	{
 		vec_Entities.push_back(new Entity(this));
 	}
+	drawState();
 }
 Environment::~Environment() {
 
@@ -29,6 +32,19 @@ bool Environment::isInside(Vector pos) {
 	if (pos.getX() < 0 || pos.getY() < 0 || pos.getX() > border.getX() || pos.getY() > border.getY())
 		return false;
 	return true;
+}
+
+int Environment::searchItem(Vector pos, item_type itype) {
+	//returning the index of the item in vec_Items
+	//If there is no return -1
+	for (int i = 0; i < vec_Item.size(); i++) {
+		if (vec_Item.at(i)->position.EuclideanDistance(pos) <= SIGHT_RADIUS)
+			return i;
+	}
+	return -1;
+}
+void Environment::removeItem(int index) {
+	vec_Item.erase(vec_Item.begin() + index);
 }
 
 float Environment::getState(state s) {
@@ -41,7 +57,8 @@ void Environment::setState(state s, float value) {
 
 // Declare a function for updating the env state. Returns void and receives no parameters.
 void Environment::update() {
-	updateAllEntities();
+	//updateAllEntities();
+	drawState();
 }
 // Declare a function for rendering the env to the screen. Returns void and receives no parameters.
 //void render();
@@ -52,10 +69,50 @@ void Environment::updateAllEntities() {
 		vec_Entities.at(i)->update();
 	}
 }
+void Environment::drawState() {
+	window.beginDraw();
+	//Draw Location
+	sf::CircleShape circle;
+	circle.setOutlineThickness(1.f);
+	circle.setOutlineColor(sf::Color::Red);
+	circle.setFillColor(sf::Color::Transparent);
+	for (int i = 0; i < vec_Location.size(); i++) {
+		float x = vec_Location.at(i)->position.getX(),y = vec_Location.at(i)->position.getY();
+		float r = vec_Location.at(i)->radius;
+		circle.setRadius(r);
+		circle.setPosition(x-r,y-r);
+		window.draw(circle);
+	}
+	//Draw entities
+	sf::RectangleShape rect(sf::Vector2f(4.f, 4.f));
+	rect.setFillColor(sf::Color::Blue);
+	for (int i = 0; i < vec_Entities.size(); i++)
+	{
+		float x = vec_Entities.at(i)->getPosition().getX();
+		float y = vec_Entities.at(i)->getPosition().getY();
+		rect.setPosition(x - 2.f, y - 2.f);
+		window.draw(rect);
+	}
+	/*
+	//Draw items
+	circle.setOutlineColor(sf::Color::Green);
+	circle.setRadius(1.0f);
+	for (int i = 0; i < vec_Item.size(); i++)
+	{
+		float x = vec_Item.at(i)->position.getX();
+		float y = vec_Item.at(i)->position.getY();
+		circle.setPosition(x - 1.0f, y - 1.0f);
+		//window.draw(circle);
+	}
+	*/
+	window.endDraw();
+}
+
 //Return the entity's position vector with the corresponding index
 Vector Environment::getEntPosition(int index) {
 	return vec_Entities.at(index)->getPosition();
 }
+
 //=================================================================================================================
 //
 //												Location Class

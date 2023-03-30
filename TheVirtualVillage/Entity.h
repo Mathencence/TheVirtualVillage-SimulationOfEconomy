@@ -1,6 +1,7 @@
 #pragma once
 #include "Vector.h"
 #include "Gene.h"
+#include "Item.h"
 #include "Utility.h"
 #include "Parameters.h"
 
@@ -35,9 +36,12 @@ private:
 
 	Vector position;
 	Gene gene;
+	vector <Item*> vec_Prop;
+
 
 	intention decide();
 	void move(intention intention);
 	void action(intention intention);
+	void gather();
 	
 };

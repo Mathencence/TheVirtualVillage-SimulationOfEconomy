@@ -1,6 +1,5 @@
 #pragma once
 #include "Window.h"
-
 #include "Vector.h"
 #include "Entity.h"
 #include "Item.h"
@@ -17,6 +16,7 @@ enum location {
 enum state {
 
 };
+class Entity;
 class Location;
 
 //The environment would be a village that contains villagers (agents) to interact
@@ -33,6 +33,10 @@ public:
 	//void render();
 	
 	bool isInside(Vector pos);
+
+	//Game Mechanic
+	int searchItem(Vector pos, item_type itype);
+	void removeItem(int index);
 
 	Window* getWindow() { return &window; }
 	//Return the value of Environment state s
@@ -52,8 +56,13 @@ private:
 	//Entity* ent_player;
 	void updateAllEntities();
 
+	//Graphics
+	void drawState();
+
 	//Return the entity's position vector with the corresponding index
 	Vector getEntPosition(int index);
+
+	friend class Entity;
 };
 // Location is an area specified for usage, however the location may not contain any mechanic.
 class Location {

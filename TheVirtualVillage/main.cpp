@@ -39,18 +39,16 @@ int main()
             case sf::Event::Closed:
                 rw->close();
                 break;
-
                 // key pressed
             case sf::Event::KeyPressed:
                 // handle the key press event
                 break;
-
                 // handle other events...
-
             default:
                 break;
             }
         }
+        sim.getEnv()->update();
     }
 
     return 0;

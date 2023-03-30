@@ -1,6 +1,10 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
 #include "Vector.h"
+#include "Gene.h"
+#include "Item.h"
+#include "Utility.h"
+#include "Parameters.h"
 #include "Environment.h"
 #include <iostream>
 #include <fstream>

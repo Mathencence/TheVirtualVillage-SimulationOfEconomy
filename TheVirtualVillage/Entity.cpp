@@ -1,9 +1,10 @@
 #include "Entity.h"
-
-
+#include "Environment.h"
 // Declare a default constructor and a default destructor.
 Entity::Entity(Environment* p):gene(){
 	this->p_Env = p;
+	//Randomize initial position
+	this->setPosition(Vector(Utility::random(0, 1000), Utility::random(0, 1000)));
 	//Completely random
 	this->gene.randomize();
 }
@@ -50,6 +51,7 @@ void Entity::action(intention decision) {
 	switch (decision)
 	{
 		case GATHER:
+			gather();
 			break;
 		case PURCHASE:
 			break;
@@ -63,5 +65,26 @@ void Entity::action(intention decision) {
 			break;
 		default:
 			break;
+	}
+}
+void Entity::gather() {
+	vector<float> vec_pref = gene.getAlleleSet(ITEM_PREF);
+	//First approach Completely based on gene at all time.
+	for (int i = 0; i < vec_pref.size(); i++)
+	{
+		//Normalize the vector to range 0-1
+		vec_pref.at(i) += 1;
+		vec_pref.at(i) /= 2;
+	}
+	int rv = Utility::random(vec_pref);
+	if (rv < 0) {
+		return;
+	}
+	int itemIdx = this->p_Env->searchItem(this->position, (item_type)rv);
+	bool isSuccess = true;
+	if (isSuccess) {
+		//Pick the item, remove  from world and add to property
+		vec_Prop.push_back(p_Env->vec_Item.at(itemIdx));
+		p_Env->removeItem(itemIdx);
 	}
 }
