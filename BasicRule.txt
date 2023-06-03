@@ -1,0 +1,19 @@
+The economy system is based on agent-modeling, with the fundamental agents being the "villagers". These villagers are the most basic type of agent in the system, capable of producing and consuming resources. They can also reproduce, but it is unlikely that the genes determining an individual's behavior will be inherited by future generations. This is because the system is not designed to identify survival behaviors, but rather to construct a virtual market environment.
+
+//
+//=== Villagers ===//
+//
+Creating the villagers correctly is an important step, and the model will be validated by comparing it to general economic theory. The environment is turn-based and runs until a certain number of turns or specific conditions are met. During each turn, the villagers have the opportunity to perform actions such as consuming resources, gathering resources, and trading.
+
+When certain conditions are met, the villagers may attempt to reproduce. Reproduction is costless in terms of resources, but it consumes a whole turn during which the villager cannot gather or trade. The new-born villager is considered a child and consumes additional resources from the parent while not being productive. This creates fluctuations in the population, reflecting the adaptiveness of the society and simulating the uncertainty of a market.
+
+Reproduction causes fluctuations in population, reflecting the adaptiveness of the society and creating opportunities to randomize the attributes of the society to simulate the uncertainty of a market.
+
+//
+//=== Traders ===//
+//
+Traders are an agent-based organization whose main purpose is to trade items. Unlike villagers, they are not limited by survival needs but instead have to pay taxes, which serves as a survival pressure. Traders may also reproduce when they have accumulated a substantial amount of cash, and the new-born traders would begin with a cash amount given by their parents.
+
+The genes of traders are highly likely to be inherited by the next generation since analyzing changes in trader genes is one of the research's purposes. Trader genes influence behavior when making commercial decisions, and traders will expire if they are unable to pay their taxes.
+
+Similar to villagers, the trader population fluctuates, reflecting the population's survivability. However, the randomization is low because the genes are expected to converge.
