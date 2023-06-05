@@ -133,22 +133,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Environment.cpp" />
+    <ClCompile Include="source\Entity.cpp" />
+    <ClCompile Include="source\Environment.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Simulation.cpp" />
-    <ClCompile Include="Window.cpp" />
+    <ClCompile Include="source\Simulation.cpp" />
+    <ClCompile Include="source\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\AGD_GameLoop\AGD_GameLoop\Vector.h" />
-    <ClInclude Include="Entity.h" />
-    <ClInclude Include="Environment.h" />
-    <ClInclude Include="Gene.h" />
-    <ClInclude Include="Item.h" />
-    <ClInclude Include="Parameters.h" />
-    <ClInclude Include="Simulation.h" />
-    <ClInclude Include="Utility.h" />
-    <ClInclude Include="Window.h" />
+    <ClInclude Include="include\Entity.h" />
+    <ClInclude Include="include\Environment.h" />
+    <ClInclude Include="include\Gene.h" />
+    <ClInclude Include="include\Item.h" />
+    <ClInclude Include="include\Parameters.h" />
+    <ClInclude Include="include\Simulation.h" />
+    <ClInclude Include="include\Utility.h" />
+    <ClInclude Include="include\Window.h" />
+    <ClInclude Include="include\Vector.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

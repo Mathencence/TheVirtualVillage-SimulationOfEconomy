@@ -1,3 +1,8 @@
-﻿  Entity.cpp
-C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\Utility.h(42,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+﻿  main.cpp
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\main.cpp(26,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Entity.cpp
+  Environment.cpp
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(144,25): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+  Simulation.cpp
+  Generating Code...
   TheVirtualVillage.vcxproj -> C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\x64\Debug\TheVirtualVillage.exe

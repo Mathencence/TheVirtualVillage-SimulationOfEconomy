@@ -1,7 +1,9 @@
 #include <iostream>
 #include <time.h>
+#include <SFML/System/Clock.hpp>
+#include <SFML/System/Time.hpp>
 #include <SFML/Graphics.hpp>
-#include "Simulation.h"
+#include "include/Simulation.h"
 using namespace std;
 
 /*int simpleLoop(Game* g) {//return fps of this loop
@@ -26,6 +28,11 @@ int main()
     //sim.consoleData(g);
     //sim.logData();
     sf::RenderWindow* rw = sim.getRW();
+    sf::Clock clock;
+    sf::Time elapsedTime;
+    float deltaTime;
+    sf::Time targetFrameTime = sf::seconds(1.0f/3.0f); // 3 turns per second
+
     while(rw->isOpen())
     {
         // handle events
@@ -48,6 +55,12 @@ int main()
                 break;
             }
         }
+        elapsedTime = clock.restart();
+        deltaTime = elapsedTime.asSeconds();
+        sf::Time remainingTime = targetFrameTime - elapsedTime;
+        if (remainingTime > sf::Time::Zero)
+            sf::sleep(remainingTime);
+        //printf("TimeElapsed:%f", deltaTime);
         sim.getEnv()->update();
     }
 
