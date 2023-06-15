@@ -24,11 +24,16 @@ public:
 private:
 	Environment* p_Env;
 
+	Vector homePosition;
 	Vector position;
 	Gene gene;
 	vector <Item*> vec_Prop;
+	//The descending order of talent types
+	//The index in vec_tal represent the type of item
+	vector<int> vec_tal;
 
 	void move();
+	int search();
 	void gather();
 	
 };

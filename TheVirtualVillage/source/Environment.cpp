@@ -38,7 +38,7 @@ int Environment::searchItem(Vector pos, item_type itype) {
 	//returning the index of the item in vec_Items
 	//If there is no return -1
 	for (int i = 0; i < vec_Item.size(); i++) {
-		if (vec_Item.at(i)->position.EuclideanDistance(pos) <= SIGHT_RADIUS)
+		if (vec_Item.at(i)->position.EuclideanDistance(pos) <= SIGHT_RADIUS&&vec_Item.at(i)->type==itype)
 			return i;
 	}
 	return -1;

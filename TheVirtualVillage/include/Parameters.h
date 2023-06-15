@@ -9,7 +9,7 @@
 //Rules
 #define SPEED_BASE 20
 #define SPEED_GENE SPEED_BASE/2
-#define SIGHT_RADIUS 5
+#define SIGHT_RADIUS 15
 //Number of initial location
 const int INITIAL_LOCATION[] = { 10, 10, 10, 10, 10 };
 

@@ -7,6 +7,7 @@ enum item_type{
 	WOOD,
 	WATER,
 	FISH,
+	TYPELENGTH,
 };
 class Location;
 class Item {

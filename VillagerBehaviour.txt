@@ -1,0 +1,12 @@
+A villager has two objectives, to gather resources and survive.
+During the process, they contribute resources to the society, and when they trading resources, they create economy.
+
+Mechanism
+Each turn a villager would move and gather typically. A villager may have different efficiency agianst different resources,
+so they should try to look for the type of resources that is optimal for them. A villager should wander around the places he used to get
+resources before and explore if the place is consider not available at the moment.
+
+In term of sticking around the familiar place, the villager should has a memory that contain the position. 
+Thus, the movement behavoiur diverse into two variant:
+1. When the memorized place(home position) is consider available the movement should has limited randomness and remain close to the home position.
+2. When the home position is consider invailable, it enters a no home mode, fully explore the map with no restriction, untill it finds a suitable home position.
