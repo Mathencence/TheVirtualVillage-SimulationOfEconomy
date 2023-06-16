@@ -87,7 +87,7 @@ void Environment::drawState() {
 	}
 	//Draw entities
 	sf::RectangleShape rect(sf::Vector2f(4.f, 4.f));
-	rect.setFillColor(sf::Color::Blue);
+	rect.setFillColor(sf::Color::White);
 	for (int i = 0; i < vec_Entities.size(); i++)
 	{
 		float x = vec_Entities.at(i)->getPosition().getX();
@@ -97,7 +97,7 @@ void Environment::drawState() {
 	}
 	
 	//Draw items
-	/*
+	
 	circle.setOutlineColor(sf::Color::Green);
 	circle.setRadius(1.0f);
 	for (int i = 0; i < vec_Item.size(); i++)
@@ -107,7 +107,7 @@ void Environment::drawState() {
 		circle.setPosition(x - 1.0f, y - 1.0f);
 		window.draw(circle);
 	}
-	*/
+	
 	window.endDraw();
 }
 

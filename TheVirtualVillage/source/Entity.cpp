@@ -1,14 +1,14 @@
 #include "../include/Entity.h"
 #include "../include/Environment.h"
 // Declare a default constructor and a default destructor.
-Entity::Entity(Environment* p):gene(),homePosition(Vector(-1,-1)){
+Entity::Entity(Environment* p):gene(),homePosition(Vector(-1,-1)),homeRating(0.f){
 	this->p_Env = p;
 	//Randomize initial position
 	this->setPosition(Vector(Utility::random(0, MAPSIZE), Utility::random(0, MAPSIZE)));
 	//Completely random
 	this->gene.randomize();
 	//Get talent gene
-	vector<float> talentGene= gene.getAlleleSet(TALENT);
+	talentGene = gene.getAlleleSet(TALENT);
 	for (int i = 0; i < talentGene.size(); i++)
 	{
 		vec_tal.push_back(i);
@@ -27,12 +27,17 @@ void Entity::update() {
 		printf("%d,", vec_tal.at(i));
 	}
 	int idx = search();
-	if(idx!=-1)
-	printf("idx: %d\n", p_Env->vec_Item.at(idx)->type);
+	//If idx!=-1, item found
+	if (idx != -1) {
+		printf("idx: %d\n", p_Env->vec_Item.at(idx)->type);
+		gather(idx);
+	}
+	
+	
 }
 
 void Entity::move() {
-	float speed = SPEED_BASE + SPEED_GENE * Utility::random();
+	float speed = SPEED_BASE + SPEED_GENE * gene.getAllele(SPEED) - (1.5 * homeRating); //For better home rating, less exploration
 	//Wander from home if has valid home position, else completely random
 	if (homePosition.getX() >= 0&& homePosition.getY()>=0) {
 		this->position = homePosition;
@@ -47,32 +52,47 @@ void Entity::move() {
 }
 int Entity::search() {
 	int idx = -1;
-	for (int i = 0; i < static_cast<int>(TYPELENGTH); i++)
+	for (int i = 0; i < vec_tal.size(); i++)
 	{
 		idx = p_Env->searchItem(this->position, static_cast<item_type>(vec_tal.at(i)));
-		if (idx != -1)
+		if (idx != -1) {
+			if (homeRating < i) {
+				//Better place found
+				homeRating = (float)i;
+				homePosition = this->position;
+			}
+			else if (homeRating > i) {
+				//Home may be not suitable
+				homeRating = (homeRating + (float)i) / 2.f;
+			}
 			return idx;
+		}
+			
 	}
+	homeRating = 0.f;
+	homePosition = Vector(-1, -1);
 	return idx;
 }
-void Entity::gather() {
-	vector<float> vec_pref = gene.getAlleleSet(ITEM_PREF);
-	//First approach Completely based on gene at all time.
-	for (int i = 0; i < vec_pref.size(); i++)
-	{
-		//Normalize the vector to range 0-1
-		vec_pref.at(i) += 1;
-		vec_pref.at(i) /= 2;
+void Entity::gather(int idx) {
+
+	int obtainCount = 1;
+	float tal = talentGene.at(static_cast<int> (p_Env->vec_Item.at(idx)->type));
+	if (tal != 0.f) {
+		if (tal > 0) {
+			if (Utility::isSuccess(tal))
+				obtainCount++;
+		}
+		else{
+			if (Utility::isSuccess(tal*(-1.f)))
+				obtainCount--;
+		}
 	}
-	int rv = Utility::random(vec_pref);
-	if (rv < 0) {
-		return;
-	}
-	int itemIdx = this->p_Env->searchItem(this->position, (item_type)rv);
-	bool isSuccess = true;
-	if (isSuccess) {
+	if (obtainCount>0) {
 		//Pick the item, remove  from world and add to property
-		vec_Prop.push_back(p_Env->vec_Item.at(itemIdx));
-		p_Env->removeItem(itemIdx);
+		for (size_t i = 0; i < obtainCount; i++)
+		{
+			vec_Prop.push_back(new Item(p_Env->vec_Item.at(idx)->type));
+		}
+		p_Env->removeItem(idx);
 	}
 }

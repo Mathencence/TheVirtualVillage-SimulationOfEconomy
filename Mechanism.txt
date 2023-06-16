@@ -1,0 +1,19 @@
+// Villager
+//Movement
+A villager will search around its home position if existed one. If not he would randomly explore the map to find one.
+The basic idea to determine the home position is by the rating of item he found in the specific position.
+If the rating higher than home position, he immigrates, otherwise reduce the home rating accordingly to allow potential immigration.
+For higher rating, the range of searching around home would be shorter, vice vera.
+
+//Gather
+When a villager discovers an item and is prepared to gather it, the item is transferred to the villager's assets. Each village has different talent levels for different items,
+represented by a value ranging from -1.0 to 1.0. This talent value influences the gathering process in the following way:
+
+- For a talent value of 0.0, the villager is guaranteed to obtain one item successfully.
+
+- A negative talent value, represented as "-x", indicates that the villager has a probability of x to fail in obtaining the item.
+
+- A positive talent value, represented as "x", means the villager has a probability of x to acquire an additional item.
+
+In summary, the talent value determines the likelihood of success or failure in gathering the item, with negative values
+increasing the chance of failure and positive values increasing the chance of obtaining extra items.

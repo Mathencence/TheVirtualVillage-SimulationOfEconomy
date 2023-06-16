@@ -25,8 +25,10 @@ private:
 	Environment* p_Env;
 
 	Vector homePosition;
+	float homeRating;
 	Vector position;
 	Gene gene;
+	vector<float> talentGene;
 	vector <Item*> vec_Prop;
 	//The descending order of talent types
 	//The index in vec_tal represent the type of item
@@ -34,6 +36,6 @@ private:
 
 	void move();
 	int search();
-	void gather();
+	void gather(int idx);
 	
 };

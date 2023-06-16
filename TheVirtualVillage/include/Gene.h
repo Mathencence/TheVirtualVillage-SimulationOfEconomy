@@ -56,6 +56,9 @@ public:
 			chromsome.at(i) = r;
 		}
 	}
+	float getAllele(allele g) {
+		return chromsome.at(g);
+	}
 	vector<float> getAlleleSet(alleleType type) {
 		vector<float> v;
 		int i = 0;

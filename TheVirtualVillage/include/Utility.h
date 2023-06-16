@@ -47,6 +47,14 @@ public:
 		return v;
 	}
 
+	bool static isSuccess(float p) {
+		if (p <= 0.f)
+			return false;
+		if (p >= 1.f)
+			return true;
+		if (random() < p)
+			return true;
+	}
 	void static sortIdx(vector<float> vec, vector<int>& outvec, bool isAscending = true) {
 		for (int i = 0; i < vec.size() - 1; i++) {
 			for (int j = 0; j < vec.size() - i - 1; j++) {

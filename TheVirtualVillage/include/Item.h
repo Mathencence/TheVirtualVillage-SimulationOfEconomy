@@ -12,6 +12,11 @@ enum item_type{
 class Location;
 class Item {
 public:
+	Item(item_type type) {
+		this->type = type;
+		position = Vector(-1,-1);
+		this->loc = nullptr;
+	}
 	Item(item_type type, Vector initPos, Location* loc){
 		this->type = type;
 		position = initPos;
