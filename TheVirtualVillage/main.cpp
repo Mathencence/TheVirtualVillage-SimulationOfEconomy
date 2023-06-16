@@ -31,7 +31,7 @@ int main()
     sf::Clock clock;
     sf::Time elapsedTime;
     float deltaTime;
-    sf::Time targetFrameTime = sf::seconds(1.0f/3.0f); // 3 turns per second
+    sf::Time targetFrameTime = sf::seconds(1.0f/1000.0f); // 3 turns per second
 
     while(rw->isOpen())
     {
@@ -62,6 +62,8 @@ int main()
             sf::sleep(remainingTime);
         //printf("TimeElapsed:%f", deltaTime);
         sim.getEnv()->update();
+        if ((int)sim.getEnv()->getState(TURN) % LOG_INTERVAL == 0)
+            sim.logData();
     }
 
     return 0;

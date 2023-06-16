@@ -1,7 +1,7 @@
 #include "../include/Environment.h"
 
 
-Environment::Environment():border(MAPSIZE,MAPSIZE) {
+Environment::Environment():border(MAPSIZE,MAPSIZE),turn(0) {
 	//Initialize window
 	window.setSize(sf::Vector2u(WIN_WIDTH, WIN_HEIGHT));
 	window.setTitle("Virtual-Village");
@@ -23,7 +23,11 @@ Environment::Environment():border(MAPSIZE,MAPSIZE) {
 	{
 		vec_Entities.push_back(new Entity(this));
 	}
-	drawState();
+	//Initialize env state
+	for (int i = 0; i < state::DATATYPE_LENGTH; i++) {
+		envState.push_back(0.f);
+	}
+	
 }
 Environment::~Environment() {
 
@@ -46,6 +50,8 @@ int Environment::searchItem(Vector pos, item_type itype) {
 void Environment::removeItem(int index) {
 	if (index < 0)
 		return;
+	//Deregister the item in its corresponding location
+	vec_Item.at(index)->loc->removeItem();
 	vec_Item.erase(vec_Item.begin() + index);
 }
 
@@ -59,8 +65,10 @@ void Environment::setState(state s, float value) {
 
 // Declare a function for updating the env state. Returns void and receives no parameters.
 void Environment::update() {
+	updateState();
+	drawState(RENDER_INTERVAL);
+	turn++;
 	updateAllEntities();
-	drawState();
 }
 // Declare a function for rendering the env to the screen. Returns void and receives no parameters.
 //void render();
@@ -71,7 +79,9 @@ void Environment::updateAllEntities() {
 		vec_Entities.at(i)->update();
 	}
 }
-void Environment::drawState() {
+void Environment::drawState(int interval) {
+	if (turn % interval != 0)
+		return;
 	window.beginDraw();
 	//Draw Location
 	sf::CircleShape circle;
@@ -109,6 +119,10 @@ void Environment::drawState() {
 	}
 	
 	window.endDraw();
+}
+void Environment::updateState(){
+	setState(TURN, (float)this->turn);
+	setState(POPULATION, (float)this->vec_Entities.size());
 }
 
 //Return the entity's position vector with the corresponding index

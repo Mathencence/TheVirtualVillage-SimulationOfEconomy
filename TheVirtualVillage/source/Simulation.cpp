@@ -1,11 +1,12 @@
 #include "../include/Simulation.h"
 
-
 Simulation::Simulation(){
     this->env = new Environment();
     this->rw = this->env->getWindow()->getRWin();
+    openLogFile();
 }
 Simulation::~Simulation(){
+    closeLogFile();
 }
 void Simulation::consoleData(Gene g) {
     vector<float> v = g.getAlleleSet(PHYSIQUE);
@@ -18,7 +19,7 @@ void Simulation::consoleData(Gene g) {
         printf("%f ", v2.at(i));
     }
 }
-void Simulation::logData(){
+void Simulation::openLogFile() {
     std::time_t t = std::time(nullptr); // get current time
     std::tm* now = std::localtime(&t); // convert time to struct tm
     char buffer[80];
@@ -30,19 +31,25 @@ void Simulation::logData(){
     oss << pathOfLog << str_time << ".txt";
     std::string logFileName = oss.str();
     // construct log file name
-    std::ofstream logFile(logFileName, std::ios::trunc);
+    logFile = new std::ofstream(logFileName, std::ios::trunc);
     cout << logFileName << endl;
-
-    if (logFile.is_open())
+}
+void Simulation::closeLogFile() {
+    // Close the log file
+    logFile->close();
+}
+void Simulation::logData(){
+    if (logFile->is_open())
     {
-        printf("log file opened sucessful.");
+        //printf("Log file opened sucessful.");
         // Write a message to the log file
-        logFile << "Simulation data logged." << std::endl;
-        logFile << str_time << std::endl;
-        // Close the log file
-        logFile.close();
+        //*logFile << "Simulation data logged." << std::endl;
+        //*logFile << str_time << std::endl;
+        *logFile << "Turn: " << env->getState(TURN) << std::endl;
+        *logFile << "Population: " << env->getState(POPULATION) << std::endl;
+        *logFile << std::endl;
     }
     else {
-        cerr << "Error creating log file: " << logFileName << std::endl;
+        cerr << "Error writing log file: " << std::endl;
     }
 }

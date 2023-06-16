@@ -14,7 +14,9 @@ enum location {
 	LOCATION_LENGTH
 };
 enum state {
-
+	TURN,
+	POPULATION,
+	DATATYPE_LENGTH
 };
 class Entity;
 class Location;
@@ -49,6 +51,8 @@ private:
 	vector<float> envState;
 	//The map is a square start from 0,0, to the point border.
 	Vector border;
+	//Turn pass
+	int turn;
 	//Pointers of objects
 	std::vector<Entity*> vec_Entities;
 	std::vector<Location*> vec_Location;
@@ -57,14 +61,15 @@ private:
 	void updateAllEntities();
 
 	//Graphics
-	void drawState();
-
-	//Clock
+	void drawState(int interval);
+	
+	void updateState();
 
 
 	//Return the entity's position vector with the corresponding index
 	Vector getEntPosition(int index);
 
+	friend class Simulation;
 	friend class Entity;
 };
 // Location is an area specified for usage, however the location may not contain any mechanic.

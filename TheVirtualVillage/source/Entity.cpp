@@ -22,14 +22,10 @@ Entity::~Entity() {
 // For eact time step, entity update its state by interacting with the environment
 void Entity::update() {
 	move();
-	for (size_t i = 0; i < vec_tal.size(); i++)
-	{
-		printf("%d,", vec_tal.at(i));
-	}
 	int idx = search();
 	//If idx!=-1, item found
 	if (idx != -1) {
-		printf("idx: %d\n", p_Env->vec_Item.at(idx)->type);
+		//printf("idx: %d\n", p_Env->vec_Item.at(idx)->type);
 		gather(idx);
 	}
 	

@@ -32,4 +32,7 @@ private:
 	Environment* env;
 	sf::RenderWindow* rw;
 	const std::string pathOfLog = "./log/";
+	std::ofstream* logFile;
+	void openLogFile();
+	void closeLogFile();
 };
