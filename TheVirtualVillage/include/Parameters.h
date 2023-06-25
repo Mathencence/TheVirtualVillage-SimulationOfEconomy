@@ -7,9 +7,10 @@
 #define MAX_LOCATION_RADIUS	120
 #define INITIAL_POPULATION 100
 
+//Simulation
 #define RENDER_INTERVAL 20 //Render the environment for every [RENDER_INTERVAL] turns
 #define LOG_INTERVAL 20	//Log the environment for every [RENDER_INTERVAL] turns
-
+#define RECENTFRAME_NUM 10 //Number of recent frames tracked to estimate performance
 //Rules
 #define SPEED_BASE 20
 #define SPEED_GENE SPEED_BASE/2

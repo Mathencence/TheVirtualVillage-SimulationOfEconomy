@@ -1,5 +1,5 @@
 ﻿  main.cpp
-C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\main.cpp(26,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\main.cpp(47,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Entity.cpp
 C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Entity.cpp(10,25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Entity.cpp(50,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data

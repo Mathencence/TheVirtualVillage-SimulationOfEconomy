@@ -20,6 +20,27 @@ using namespace std;
     g->printFps(fps);
     return fps;
 }*/
+float calculateAverageFrameRate(const std::vector<float>& frameTimes) {
+
+    float sumFrameTimes = 0.0f;
+    for (int i = 0; i < frameTimes.size(); i++) {
+        sumFrameTimes += frameTimes[i];
+    }
+
+    float averageFrameTime = sumFrameTimes / (float)frameTimes.size();
+    float averageFrameRate = 1.0f / averageFrameTime;
+
+    return averageFrameRate;
+    //std::cout << "Average Frame Rate: " << averageFrameRate << " frames per second" << std::endl;
+}
+void updateFrameHistory(float frameTime,std::vector<float>& frameTimes) {
+    if (frameTimes.size() >= RECENTFRAME_NUM)
+        frameTimes.erase(frameTimes.begin());
+
+    frameTimes.push_back(frameTime);
+        
+}
+
 int main()
 {
     //Generate a random seed
@@ -31,7 +52,9 @@ int main()
     sf::Clock clock;
     sf::Time elapsedTime;
     float deltaTime;
-    sf::Time targetFrameTime = sf::seconds(1.0f/1000.0f); // 3 turns per second
+    sf::Time targetFrameTime = sf::seconds(1.0f/1000.0f); // x turns per second
+    vector<float> recentFrameTimes;
+
 
     while(rw->isOpen())
     {
@@ -60,10 +83,18 @@ int main()
         sf::Time remainingTime = targetFrameTime - elapsedTime;
         if (remainingTime > sf::Time::Zero)
             sf::sleep(remainingTime);
+
+        //Tracking performance
+        updateFrameHistory(deltaTime, recentFrameTimes);
+
         //printf("TimeElapsed:%f", deltaTime);
         sim.getEnv()->update();
-        if ((int)sim.getEnv()->getState(TURN) % LOG_INTERVAL == 0)
+        if ((int)sim.getEnv()->getState(TURN) % LOG_INTERVAL == 0) {
             sim.logData();
+            //Visaulize performance on console
+            printf("Turn: %d ------- TurnPerSec: %f\n", (int)sim.getEnv()->getState(TURN),calculateAverageFrameRate(recentFrameTimes));
+        }
+           
     }
 
     return 0;
