@@ -59,7 +59,7 @@ private:
 	std::vector<Item*> vec_Item;
 	//Entity* ent_player;
 	void updateAllEntities();
-
+	void updateAllLocations();
 	//Graphics
 	void drawState(int interval);
 	
@@ -71,13 +71,16 @@ private:
 
 	friend class Simulation;
 	friend class Entity;
+	friend Location;
 };
 // Location is an area specified for usage, however the location may not contain any mechanic.
 class Location {
 public:
 	// Declare a default constructor and a default destructor.
-	Location(Environment* p, vector<Item*> &vec_Item, location type, Vector pos = Vector(-1, -1), float radius = -1);
+	Location(Environment* p, location type, Vector pos = Vector(-1, -1), float radius = -1);
 	~Location();
+	//Generate n item to the location
+	void generateItem(int n);
 
 	// Declare a function for updating the env state. Returns void and receives no parameters.
 	void update();

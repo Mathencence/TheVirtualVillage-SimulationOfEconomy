@@ -2,8 +2,7 @@
 enum item_type{
 	APPLE,
 	MEAT,
-	ROCK,
-	IRON,
+	FUR,
 	WOOD,
 	WATER,
 	FISH,

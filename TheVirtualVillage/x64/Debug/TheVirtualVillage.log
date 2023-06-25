@@ -1,3 +1,15 @@
 ﻿  main.cpp
 C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\main.cpp(26,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Entity.cpp
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Entity.cpp(10,25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Entity.cpp(50,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Environment.cpp
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(176,25): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(206,7): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(215,7): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(240,18): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  Simulation.cpp
+  Generating Code...
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\include\Utility.h(57): warning C4715: 'Utility::isSuccess': not all control paths return a value
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\include\Utility.h(57): warning C4715: 'Utility::isSuccess': not all control paths return a value
   TheVirtualVillage.vcxproj -> C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\x64\Debug\TheVirtualVillage.exe

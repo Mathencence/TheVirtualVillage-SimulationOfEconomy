@@ -1,7 +1,17 @@
 #include "../include/Entity.h"
 #include "../include/Environment.h"
 // Declare a default constructor and a default destructor.
-Entity::Entity(Environment* p):gene(),homePosition(Vector(-1,-1)),homeRating(0.f){
+Entity::Entity(Environment* p):gene(),homePosition(Vector(-1,-1)),homeRating(0.f)
+,isDead(false),age(0),targetAge(0), cash(INITIAL_CASH)
+,hunger(50.f), thirst(50.f), bodyTemperature(50.f)
+,hDecay(HUNGERDECAY_BASE),tDecay(THIRSTDECAY_BASE), btDecay(TEMPERATUREDECAY_BASE)
+{
+	//Needs
+	targetAge = (LIFE_BASE + round(gene.getAllele(LIFESPAN) * LIFE_GENE));
+	hDecay -= gene.getAllele(HUNGER) * HUNGERDECAY_GENE;
+	tDecay -= gene.getAllele(THRIST) * THIRSTDECAY_GENE;
+	btDecay -= gene.getAllele(COLDRES) * THIRSTDECAY_GENE;
+
 	this->p_Env = p;
 	//Randomize initial position
 	this->setPosition(Vector(Utility::random(0, MAPSIZE), Utility::random(0, MAPSIZE)));
@@ -21,6 +31,10 @@ Entity::~Entity() {
 // Methods:
 // For eact time step, entity update its state by interacting with the environment
 void Entity::update() {
+	checkNeed();
+	trade();
+	consume();
+
 	move();
 	int idx = search();
 	//If idx!=-1, item found
@@ -91,4 +105,64 @@ void Entity::gather(int idx) {
 		}
 		p_Env->removeItem(idx);
 	}
+}
+
+void Entity::checkNeed() {
+	age++;
+	if (age > targetAge)
+		death();
+	hunger -= hDecay;
+	thirst -= tDecay;
+	bodyTemperature -= btDecay;
+	if (hunger < 0.f || thirst < 0.f || bodyTemperature < 0.f)
+		death();
+}
+void Entity::consume() {
+	if (hunger < 95.f) {
+		for (int i = 0; i < vec_Prop.size(); i++)
+		{
+			item_type type = vec_Prop.at(i)->type;
+			if (type == APPLE || type == MEAT || type == FISH)
+			{
+				hunger += NEED_RECOVERY;
+				delete vec_Prop.at(i);
+				vec_Prop.erase(vec_Prop.begin() + i);
+				break;
+			}
+		}
+	}
+	if (thirst < 95.f) {
+		for (int i = 0; i < vec_Prop.size(); i++)
+		{
+			item_type type = vec_Prop.at(i)->type;
+			if (type == WATER)
+			{
+				thirst += NEED_RECOVERY;
+				delete vec_Prop.at(i);
+				vec_Prop.erase(vec_Prop.begin() + i);
+				break;
+			}
+		}
+	}
+	if (bodyTemperature < 95.f) {
+		for (int i = 0; i < vec_Prop.size(); i++)
+		{
+			item_type type = vec_Prop.at(i)->type;
+			if (type == FUR || type == WOOD)
+			{
+				bodyTemperature += NEED_RECOVERY;
+				delete vec_Prop.at(i);
+				vec_Prop.erase(vec_Prop.begin() + i);
+				break;
+			}
+		}
+	}	
+}
+
+void Entity::trade() {
+
+}
+
+void Entity::death() {
+	isDead = true;
 }

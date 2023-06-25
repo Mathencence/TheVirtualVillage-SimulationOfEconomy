@@ -10,7 +10,7 @@ Environment::Environment():border(MAPSIZE,MAPSIZE),turn(0) {
 	for (int i = 0; i < LOCATION_LENGTH; i++)
 	{
 		for (int j = 0; j < INITIAL_LOCATION[i]; j++) {
-			vec_Location.push_back(new Location(this,this->vec_Item,(location)i));
+			vec_Location.push_back(new Location(this,(location)i));
 		}
 	}
 	/*
@@ -52,6 +52,7 @@ void Environment::removeItem(int index) {
 		return;
 	//Deregister the item in its corresponding location
 	vec_Item.at(index)->loc->removeItem();
+	//Remove the item address in vec_Item
 	vec_Item.erase(vec_Item.begin() + index);
 }
 
@@ -69,16 +70,31 @@ void Environment::update() {
 	drawState(RENDER_INTERVAL);
 	turn++;
 	updateAllEntities();
+	updateAllLocations();
 }
 // Declare a function for rendering the env to the screen. Returns void and receives no parameters.
 //void render();
 
 void Environment::updateAllEntities() {
-	for(int i =0;i< vec_Entities.size();i++)
-	{
-		vec_Entities.at(i)->update();
+	vec_Entities.erase(std::remove_if(vec_Entities.begin(), vec_Entities.end(), [](Entity* entity) {
+		if (entity->isDead) {
+			delete entity;
+			return true; // Remove the entity from the vector
+		}
+	return false; // Keep the entity in the vector
+		}), vec_Entities.end());
+
+	for (auto entity : vec_Entities) {
+		entity->update();
 	}
 }
+void Environment::updateAllLocations(){
+	for (int i = 0; i < vec_Location.size(); i++)
+	{
+		vec_Location.at(i)->update();
+	}
+}
+
 void Environment::drawState(int interval) {
 	if (turn % interval != 0)
 		return;
@@ -120,6 +136,8 @@ void Environment::drawState(int interval) {
 	
 	window.endDraw();
 }
+
+//Update the current situation of the environment such as population
 void Environment::updateState(){
 	setState(TURN, (float)this->turn);
 	setState(POPULATION, (float)this->vec_Entities.size());
@@ -136,7 +154,7 @@ Vector Environment::getEntPosition(int index) {
 //
 //=================================================================================================================
 
-Location::Location(Environment* p, vector<Item*>& vec_Item, location type, Vector pos, float rad):p_Env(nullptr),itemCount(0) {
+Location::Location(Environment* p, location type, Vector pos, float rad):p_Env(nullptr),itemCount(0) {
 	if (p)
 		this->p_Env = p;
 	if (pos.getX() != -1) {
@@ -156,36 +174,7 @@ Location::Location(Environment* p, vector<Item*>& vec_Item, location type, Vecto
 
 	//Initialize items
 	targetItemCount = round(radius * radius * RICHNESS);
-	itemCount = targetItemCount;
-	for (int i = 0; i < targetItemCount; i++)
-	{
-		Vector pos = Utility::randomPointInCircle(this->position, this->radius);
-		//Check if inside
-		while (!p_Env->isInside(pos)){
-			pos = Utility::randomPointInCircle(this->position, this->radius);
-		}
-		switch (this->type)
-		{
-		case PORTABLEWATER:
-			vec_Item.push_back(new Item(WATER,pos,this));
-			break;
-		case FOREST:
-			vec_Item.push_back(new Item(APPLE, pos,this));
-			break;
-		case PLAIN:
-			vec_Item.push_back(new Item(MEAT, pos,this));
-			break;
-		case MOUNTAIN:
-			vec_Item.push_back(new Item(ROCK, pos,this));
-			break;
-		case COAST:
-			vec_Item.push_back(new Item(FISH, pos,this));
-			break;
-		default:
-			break;
-		}
-	}
-	//printf("ItemCount:%d\n", itemCount);
+	generateItem(targetItemCount);
 }
 
 Location::~Location() {
@@ -199,8 +188,63 @@ float Location::getState(state s) {
 void Location::setState(state s, float value) {
 	locState.at(s) = value;
 }
+void Location::generateItem(int n) {
+	for (int i = 0; i < n; i++)
+	{
+		Vector pos = Utility::randomPointInCircle(this->position, this->radius);
+		//Check if inside
+		while (!p_Env->isInside(pos)) {
+			pos = Utility::randomPointInCircle(this->position, this->radius);
+		}
+		switch (this->type)
+		{
+		case PORTABLEWATER:
+			p_Env->vec_Item.push_back(new Item(WATER, pos, this));
+			itemCount++;
+			break;
+		case FOREST:
+			if (Utility::isSuccess(0.2)) {
+				p_Env->vec_Item.push_back(new Item(APPLE, pos, this));
+			}
+			else {
+				p_Env->vec_Item.push_back(new Item(WOOD, pos, this));
+			}
+			itemCount++;
+			break;
+		case PLAIN:
+			if (Utility::isSuccess(0.2)) {
+				p_Env->vec_Item.push_back(new Item(FUR, pos, this));
+			}
+			else {
+				p_Env->vec_Item.push_back(new Item(MEAT, pos, this));
+			}
+			itemCount++;
+			break;
+		case MOUNTAIN:
+			p_Env->vec_Item.push_back(new Item(FUR, pos, this));
+			itemCount++;
+			break;
+		case COAST:
+			p_Env->vec_Item.push_back(new Item(FISH, pos, this));
+			itemCount++;
+			break;
+		default:
+			break;
+		}
+	}
+	//printf("ItemCount:%d\n", itemCount);
+}
 
-// Declare a function for updating the env state. Returns void and receives no parameters.
 void Location::update() {
-	
+	//Recover [RECOVERY_SPEED] of [RICHNESS] items
+	int recoveryNum = round(RECOVERY_SPEED * targetItemCount);
+	if (targetItemCount > itemCount) {
+		if (itemCount + recoveryNum <= targetItemCount) {
+			generateItem(recoveryNum);
+		}
+		else {
+			generateItem(targetItemCount - itemCount);
+		}
+	}
+	//printf("ItemCount:%d\n", itemCount);
 }

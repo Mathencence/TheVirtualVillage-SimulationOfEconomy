@@ -9,23 +9,22 @@ enum alleleType {
 enum allele
 {
 	//Physique
-	THRIST,
-	HUNGER,
+	THRIST, //Resistance to thirst, the higher the better to survive generally
+	HUNGER, //Resistance to hunger
+	COLDRES,//Cold resistance
 	SPEED,
 	LIFESPAN,
 	//Item talent
 	TAL_APPLE,
 	TAL_MEAT,
-	TAL_ROCK,
-	TAL_IRON,
+	TAL_FUR,
 	TAL_WOOD,
 	TAL_WATER,
 	TAL_FISH,
 	//Item prefence
 	PREF_APPLE,
 	PREF_MEAT,
-	PREF_ROCK,
-	PREF_IRON,
+	PREF_FUR,
 	PREF_WOOD,
 	PREF_WATER,
 	PREF_FISH,

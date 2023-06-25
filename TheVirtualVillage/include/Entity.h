@@ -13,14 +13,16 @@ public:
 	// Declare a default constructor and a default destructor.
 	Entity(Environment* p);
 	~Entity();
-	// Methods:
-	// Move handles the positions of the sprite of the entity
-	// And bouncing the mushroom against the window limits.
-	// This fucntions returns void and receives no parameters.
+
 	void update();
 	//Getter and Setter
 	Vector getPosition() {return position;}
 	void setPosition(Vector v) {position=v;}
+
+	void death();
+	bool isDead;
+
+
 private:
 	Environment* p_Env;
 
@@ -33,6 +35,19 @@ private:
 	//The descending order of talent types
 	//The index in vec_tal represent the type of item
 	vector<int> vec_tal;
+
+	//State
+	int cash;
+	int targetAge;
+	int age;
+	//Needs is 100 when fullfilled and if under 0, villager dies.
+	float thirst,tDecay;
+	float hunger,hDecay;
+	float bodyTemperature,btDecay;
+
+	void checkNeed();
+	void trade();
+	void consume();
 
 	void move();
 	int search();
