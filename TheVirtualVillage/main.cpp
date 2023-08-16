@@ -56,41 +56,57 @@ int main()
     vector<float> recentFrameTimes;
 
 
-    while(rw->isOpen())
+    while(sim.currentRun<=RUNS)
     {
-        // handle events
-        sf::Event event;
-        while (rw->pollEvent(event))
-        {
-            // check the type of the event
-            switch (event.type)
+        /*
+            // handle events
+            sf::Event event;
+            while (rw->pollEvent(event))
             {
-                // window closed
-            case sf::Event::Closed:
-                rw->close();
-                break;
-                // key pressed
-            case sf::Event::KeyPressed:
-                // handle the key press event
-                break;
-                // handle other events...
-            default:
-                break;
+                // check the type of the event
+                switch (event.type)
+                {
+                    // window closed
+                case sf::Event::Closed:
+                    rw->close();
+                    break;
+                    // key pressed
+                case sf::Event::KeyPressed:
+                    // handle the key press event
+                    break;
+                    // handle other events...
+                default:
+                    break;
+                }
             }
-        }
+        */
+        
+        sim.getEnv()->update();
         elapsedTime = clock.restart();
         deltaTime = elapsedTime.asSeconds();
         sf::Time remainingTime = targetFrameTime - elapsedTime;
         if (remainingTime > sf::Time::Zero)
             sf::sleep(remainingTime);
-
         //Tracking performance
         updateFrameHistory(deltaTime, recentFrameTimes);
-
         //printf("TimeElapsed:%f", deltaTime);
-        sim.getEnv()->update();
+
+        if ((int)sim.getEnv()->getState(TURN)>TURNS_PERRUN) {
+            if (sim.startNewRun() < 0) {
+                sim.getEnv()->update();
+                sim.logData();
+                printf("Last run %d Completed\n", sim.currentRun - 1);
+                break;
+            }
+            else {
+                sf::RenderWindow* rw = sim.getRW();
+                sim.getEnv()->update();
+                printf("Run %d Completed\n", sim.currentRun-1);
+            }
+        }
         if ((int)sim.getEnv()->getState(TURN) % LOG_INTERVAL == 0) {
             sim.logData();
+
             //Visaulize performance on console
             printf("Turn: %d ------- TurnPerSec: %f\n", (int)sim.getEnv()->getState(TURN),calculateAverageFrameRate(recentFrameTimes));
         }

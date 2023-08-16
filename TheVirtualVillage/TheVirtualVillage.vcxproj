@@ -136,6 +136,7 @@
     <ClCompile Include="source\Entity.cpp" />
     <ClCompile Include="source\Environment.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="source\Market.cpp" />
     <ClCompile Include="source\Simulation.cpp" />
     <ClCompile Include="source\Window.cpp" />
   </ItemGroup>
@@ -144,6 +145,7 @@
     <ClInclude Include="include\Environment.h" />
     <ClInclude Include="include\Gene.h" />
     <ClInclude Include="include\Item.h" />
+    <ClInclude Include="include\Market.h" />
     <ClInclude Include="include\Parameters.h" />
     <ClInclude Include="include\Simulation.h" />
     <ClInclude Include="include\Utility.h" />

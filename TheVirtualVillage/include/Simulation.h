@@ -25,10 +25,13 @@ public:
 	// void render();
 	void consoleData(Gene g);
 
+	int startNewRun();
 	//Get environment pointer
 	Environment* getEnv() { return env; }
 	sf::RenderWindow* getRW() { return rw; }
+	int currentRun;
 private:
+	float tempPopulation,tempStock[TYPELENGTH],tempPrice[TYPELENGTH];
 	Environment* env;
 	sf::RenderWindow* rw;
 	const std::string pathOfLog = "./log/";

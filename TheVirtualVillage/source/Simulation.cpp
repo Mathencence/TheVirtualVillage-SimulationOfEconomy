@@ -1,8 +1,15 @@
 #include "../include/Simulation.h"
 
 Simulation::Simulation(){
+    this->currentRun = 1;
     this->env = new Environment();
     this->rw = this->env->getWindow()->getRWin();
+    this->tempPopulation = 0;
+    for (int i = 0; i < TYPELENGTH; i++)
+    {
+        tempStock[i] = 0;
+        tempPrice[i] = 0;
+    }
     openLogFile();
 }
 Simulation::~Simulation(){
@@ -28,28 +35,95 @@ void Simulation::openLogFile() {
 
     // Open the log file in append mode
     std::ostringstream oss;
-    oss << pathOfLog << str_time << ".txt";
+    oss << pathOfLog << str_time << ".csv";
     std::string logFileName = oss.str();
     // construct log file name
     logFile = new std::ofstream(logFileName, std::ios::trunc);
     cout << logFileName << endl;
+
+    // Write header row
+    *logFile << "Turn,Population";
+    for (size_t i = 0; i < TYPELENGTH; i++) {
+        *logFile << ",Market stock " << i + 1;
+    }
+    for (size_t i = 0; i < TYPELENGTH; i++) {
+        *logFile << ",Price " << i + 1;
+    }
+    *logFile << std::endl;
 }
 void Simulation::closeLogFile() {
     // Close the log file
     logFile->close();
 }
 void Simulation::logData(){
-    if (logFile->is_open())
-    {
-        //printf("Log file opened sucessful.");
-        // Write a message to the log file
-        //*logFile << "Simulation data logged." << std::endl;
-        //*logFile << str_time << std::endl;
-        *logFile << "Turn: " << env->getState(TURN) << std::endl;
-        *logFile << "Population: " << env->getState(POPULATION) << std::endl;
-        *logFile << std::endl;
+    //Data header is written in openLogFile()
+    if (logFile->is_open()) {
+        if (RUNS == 1) {
+            // Write data row
+            *logFile << env->getState(TURN) << ","
+                << env->getState(POPULATION);
+
+            for (size_t i = 0; i < TYPELENGTH; i++) {
+                *logFile << "," << env->market.stock[i];
+            }
+            for (size_t i = 0; i < TYPELENGTH; i++) {
+                *logFile << "," << env->market.avgPrice[i];
+            }
+            *logFile << std::endl;
+        }
+        else if (RUNS > 1) {
+            if (env->getState(TURN) == 0&&currentRun>1) {
+                //First turn of non-first run in multiple run
+                //Calculate the average of last run
+                tempPopulation /= (float)TURNS_PERRUN;
+                for (size_t i = 0; i < TYPELENGTH; i++) {
+                    tempStock[i] /= (float)TURNS_PERRUN;
+                    tempPrice[i] /= (float)TURNS_PERRUN;
+                }
+                //Log the data of last run
+                *logFile << currentRun-1 << ","
+                    << tempPopulation;
+
+                for (size_t i = 0; i < TYPELENGTH; i++) {
+                    *logFile << "," << tempStock[i];
+                }
+                for (size_t i = 0; i < TYPELENGTH; i++) {
+                    *logFile << "," << tempPrice[i];
+                }
+                *logFile << std::endl;
+                //Clear the temp memory
+                tempPopulation = 0.f;
+                for (size_t i = 0; i < TYPELENGTH; i++) {
+                    tempStock[i] = 0.f;
+                    tempPrice[i] = 0.f;
+                }
+            }
+            else if(env->getState(TURN) != 0){
+                //Non-first turn or first turn of first run
+                tempPopulation += env->getState(POPULATION)*LOG_INTERVAL;
+                for (size_t i = 0; i < TYPELENGTH; i++) {
+                    tempStock[i] += env->market.stock[i] * LOG_INTERVAL;
+                    tempPrice[i] += env->market.avgPrice[i] * LOG_INTERVAL;
+                }
+            }
+        }
+        
     }
     else {
-        cerr << "Error writing log file: " << std::endl;
+        std::cerr << "Error when writing log file." << std::endl;
     }
+}
+//Should also call env.update() once
+int Simulation::startNewRun() {
+    this->currentRun++;
+    // Delete the old object
+    if (this->env != nullptr) {
+        delete this->env;
+    }
+    this->env = new Environment();
+    this->rw = this->env->getWindow()->getRWin();
+    if (currentRun > RUNS)
+        return -1;
+
+    return 0;
 }

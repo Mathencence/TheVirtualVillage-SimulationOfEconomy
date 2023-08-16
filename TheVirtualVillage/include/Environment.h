@@ -5,9 +5,12 @@
 #include "Item.h"
 #include <vector>
 #include "Parameters.h"
+#include "Market.h"
+
 enum location {
 	PORTABLEWATER,
 	FOREST,
+	RAINFOREST,
 	PLAIN,
 	MOUNTAIN,
 	COAST,
@@ -53,11 +56,13 @@ private:
 	Vector border;
 	//Turn pass
 	int turn;
+
+	Market market;
 	//Pointers of objects
 	std::vector<Entity*> vec_Entities;
 	std::vector<Location*> vec_Location;
 	std::vector<Item*> vec_Item;
-	//Entity* ent_player;
+	
 	void updateAllEntities();
 	void updateAllLocations();
 	//Graphics

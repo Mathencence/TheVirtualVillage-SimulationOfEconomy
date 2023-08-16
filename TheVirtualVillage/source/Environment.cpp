@@ -1,7 +1,7 @@
 #include "../include/Environment.h"
 
 
-Environment::Environment():border(MAPSIZE,MAPSIZE),turn(0) {
+Environment::Environment():border(MAPSIZE,MAPSIZE),turn(0),market(Market()) {
 	//Initialize window
 	window.setSize(sf::Vector2u(WIN_WIDTH, WIN_HEIGHT));
 	window.setTitle("Virtual-Village");
@@ -71,6 +71,7 @@ void Environment::update() {
 	turn++;
 	updateAllEntities();
 	updateAllLocations();
+	market.update();
 }
 // Declare a function for rendering the env to the screen. Returns void and receives no parameters.
 //void render();
@@ -83,9 +84,13 @@ void Environment::updateAllEntities() {
 		}
 	return false; // Keep the entity in the vector
 		}), vec_Entities.end());
-
-	for (auto entity : vec_Entities) {
-		entity->update();
+	vector<int> index; int size = vec_Entities.size();
+	for (int i = 0; i < size; i++) {
+		index.push_back(i);
+	}
+	Utility::shuffle(index);
+	for (int i = 0; i < size;i++) {
+		vec_Entities.at(index.at(i))->update();
 	}
 }
 void Environment::updateAllLocations(){
@@ -203,21 +208,15 @@ void Location::generateItem(int n) {
 			itemCount++;
 			break;
 		case FOREST:
-			if (Utility::isSuccess(0.2)) {
-				p_Env->vec_Item.push_back(new Item(APPLE, pos, this));
-			}
-			else {
-				p_Env->vec_Item.push_back(new Item(WOOD, pos, this));
-			}
+			p_Env->vec_Item.push_back(new Item(APPLE, pos, this));
+			itemCount++;
+			break;
+		case RAINFOREST:
+			p_Env->vec_Item.push_back(new Item(WOOD, pos, this));
 			itemCount++;
 			break;
 		case PLAIN:
-			if (Utility::isSuccess(0.2)) {
-				p_Env->vec_Item.push_back(new Item(FUR, pos, this));
-			}
-			else {
-				p_Env->vec_Item.push_back(new Item(MEAT, pos, this));
-			}
+			p_Env->vec_Item.push_back(new Item(MEAT, pos, this));
 			itemCount++;
 			break;
 		case MOUNTAIN:
@@ -241,9 +240,6 @@ void Location::update() {
 	if (targetItemCount > itemCount) {
 		if (itemCount + recoveryNum <= targetItemCount) {
 			generateItem(recoveryNum);
-		}
-		else {
-			generateItem(targetItemCount - itemCount);
 		}
 	}
 	//printf("ItemCount:%d\n", itemCount);

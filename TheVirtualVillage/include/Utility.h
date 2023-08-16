@@ -9,6 +9,12 @@ public:
 		float r = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
 		return r;
 	}
+	int static random(int min, int max) {
+		if (min > max)
+			throw("ERROR Upperbound should larger than lowerbound in random function.");
+		int r = rand() % (max - min + 1);
+		return r + min;
+	}
 	float static random(float min, float max) {
 		if (min > max)
 			throw("ERROR Upperbound should larger than lowerbound in random function.");
@@ -52,8 +58,9 @@ public:
 			return false;
 		if (p >= 1.f)
 			return true;
-		if (random() < p)
+		if (Utility::random() < p)
 			return true;
+		return false;
 	}
 	void static sortIdx(vector<float> vec, vector<int>& outvec, bool isAscending = true) {
 		for (int i = 0; i < vec.size() - 1; i++) {
@@ -82,6 +89,26 @@ public:
 				}
 				
 			}
+		}
+	}
+	void static shuffle(std::vector<int>& outvec) {
+		int n = outvec.size();
+		for (int i = n - 1; i > 0; --i) {
+			// Generate a random index between 0 and i (inclusive)
+			int j = rand() % (i + 1);
+
+			// Swap elements at indices i and j
+			std::swap(outvec[i], outvec[j]);
+		}
+	}
+	void static shuffle(int* arr, int size) {
+		for (int i = size - 1; i > 0; --i) {
+			// Generate a random index between 0 and i (inclusive)
+			int j = rand() % (i + 1);
+			// Swap elements at indices i and j
+			int temp = arr[i];
+			arr[i] = arr[j];
+			arr[j] = temp;
 		}
 	}
 };
