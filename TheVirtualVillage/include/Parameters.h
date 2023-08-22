@@ -9,11 +9,12 @@
 
 //Simulation
 #define RENDER_INTERVAL 20 //Render the environment for every [RENDER_INTERVAL] turns
-#define LOG_INTERVAL 20	//Log the environment for every [RENDER_INTERVAL] turns
-#define RECENTFRAME_NUM 10 //Number of recent frames tracked to estimate performance
+#define LOG_INTERVAL 10	//Log the environment for every [RENDER_INTERVAL] turns
+#define RECENTFRAME_NUM 20 //Number of recent frames tracked to estimate performance
+#define ISRECORDING_WEALTH false
 
-#define RUNS 10 //How many runs for the simulation, if multiple runs, aggregated log will be generated
-#define TURNS_PERRUN 1000 //How many turns should last for a single run
+#define RUNS 50 //How many runs for the simulation, if multiple runs, aggregated log will be generated
+#define TURNS_PERRUN 500 //How many turns should last for a single run
 
 //Rules
 #define SPEED_BASE 20
@@ -22,8 +23,9 @@
 #define INITIAL_CASH 1000 //Initial amount of cash
 #define RESERVE_AMOUNT 4 //Ideal amount of reserve items
 #define REPRODUCE_AMOUNT 4 //Amount of resources needed for reproduction
-#define CHILDREN_AMOUNT 4 //Amount of children to be born when reproducing
+#define CHILDREN_AMOUNT 2  //Amount of children to be born when reproducing
 #define MAX_INITIAL_PRICING INITIAL_CASH/5
+#define TAXRATE 0.2 
 
 #define LIFE_BASE 200 //In turns
 #define LIFE_GENE 50 //Lifespan influence by gene

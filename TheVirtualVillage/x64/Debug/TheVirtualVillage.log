@@ -6,20 +6,27 @@ C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\inclu
 C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Entity.cpp(14,25): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
 C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Entity.cpp(35,71): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
 C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Entity.cpp(35,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Entity.cpp(84,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Entity.cpp(89,65): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Entity.cpp(98,47): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Entity.cpp(86,14): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Entity.cpp(91,65): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Entity.cpp(100,47): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   Environment.cpp
 C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\include\Utility.h(95,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(87,51): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(169,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(170,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(176,33): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(181,25): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(239,18): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(88,51): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(99,43): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(101,31): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(102,28): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(122,29): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(220,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(221,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(227,33): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(232,25): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Environment.cpp(290,18): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
   Market.cpp
 C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\include\Utility.h(95,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Market.cpp(71,28): warning C4305: '+=': truncation from 'double' to 'float'
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Market.cpp(107,30): warning C4305: '+=': truncation from 'double' to 'float'
   Simulation.cpp
 C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\include\Utility.h(95,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\source\Simulation.cpp(176,55): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   Generating Code...
   TheVirtualVillage.vcxproj -> C:\Projects\GitHub\TheVirtualVillage-SimulationOfEconomy\TheVirtualVillage\x64\Debug\TheVirtualVillage.exe

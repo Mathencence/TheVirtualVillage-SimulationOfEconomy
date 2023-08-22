@@ -4,13 +4,24 @@ Market::Market() {
     for (int i = 0; i < TYPELENGTH; i++)
     {
         stock[i] = 0;
-    }
-    for (int i = 0; i < TYPELENGTH; i++)
-    {
         avgPrice[i] = -1;
+
+        transactionCount[i] = 0;
+        avgTransactionPrice[i] = 0.f;
+        requestCount[i] = 0.f;
+        supplyCount[i] = 0.f;
     }
 }
 Market::~Market() {
+}
+void Market::prepare() {
+    for (int i = 0; i < TYPELENGTH; i++)
+    {
+        transactionCount[i] = 0;
+        avgTransactionPrice[i] = 0.f;
+        requestCount[i] = 0.f;
+        supplyCount[i] = (float)stock[i];
+    }
 }
 void Market::update() {
     removeInvalidGoods();
@@ -21,13 +32,14 @@ void Market::update() {
     {
         for (int j = 0; j < goods[i].size(); j++)
         {
-            if(goods[i].at(j).second> MAX_INITIAL_PRICING / 10)
-                goods[i].at(j).second -= MAX_INITIAL_PRICING/10;
+            if(goods[i].at(j).second> MAX_INITIAL_PRICING/10/5)
+                goods[i].at(j).second -= Utility::random(1, MAX_INITIAL_PRICING /10/5);
         }
     }
     avgPricing();
 }
 void Market::avgPricing() {
+    //Also calculate the avg transcation price
     for (int i = 0; i < TYPELENGTH; i++)
     {
         int sum = 0;
@@ -40,6 +52,12 @@ void Market::avgPricing() {
             sum += goods[i].at(j).second;
         }
         avgPrice[i] = (sum / stock[i]);
+        if (transactionCount[i] > 0) {
+            avgTransactionPrice[i] /= (float)transactionCount[i];
+        }
+        else {
+            avgTransactionPrice[i] = 0.f;
+        }
     }
 }
 
@@ -47,8 +65,11 @@ void Market::registerGood(Entity* owner, item_type type, int price)
 {
     goods[type].emplace_back(owner,price);
     stock[type]++;
+    supplyCount[type]++;
 }
 int Market::buyGood(Entity* buyer, item_type type, int cash) {
+    requestCount[type]+=0.2;
+    //cash argument is the maximum cash the buyer is willing to pay
     if (cash < 1||stock[type]<1) {
         return -1;
     }
@@ -79,10 +100,14 @@ int Market::buyGood(Entity* buyer, item_type type, int cash) {
     buyer->itemCount[type]++;
     //Remove the good from the market and send the money to the owner
     Entity* owner = goods[type].at(minIdx).first;
-    owner->cash += minPrice;
+    owner->cash += minPrice; owner->income += minPrice;
     owner->itemPrice[type] = minPrice + Utility::random(1, MAX_INITIAL_PRICING / 10); //Update the expectation of selling of the owner
     goods[type].erase(goods[type].begin() + minIdx);
     stock[type]--;
+    requestCount[type] += 0.8;
+
+    transactionCount[type]++;
+    avgTransactionPrice[type] += minPrice;
     return minPrice;
 }
 

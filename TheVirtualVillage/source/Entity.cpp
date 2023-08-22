@@ -4,7 +4,7 @@
 
 // Declare a default constructor and a default destructor.
 Entity::Entity(Environment* p):gene(),homePosition(Vector(-1,-1)),homeRating(0.f)
-,isDead(false), isBreeding(false), age(0), targetAge(0), cash(INITIAL_CASH)
+,isDead(false), isBreeding(false), age(0), targetAge(0), cash(INITIAL_CASH), income(0)
 ,hunger(80.f), thirst(80.f), bodyTemperature(80.f)
 ,hDecay(HUNGERDECAY_BASE),tDecay(THIRSTDECAY_BASE), btDecay(TEMPERATUREDECAY_BASE)
 {
@@ -63,6 +63,8 @@ Entity::~Entity() {
 // Methods:
 // For eact time step, entity update its state by interacting with the environment
 void Entity::update() {
+	income = 0;
+
 	checkNeed();
 	trade();
 	consume();

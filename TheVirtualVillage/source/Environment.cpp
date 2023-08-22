@@ -1,7 +1,7 @@
 #include "../include/Environment.h"
 
 
-Environment::Environment():border(MAPSIZE,MAPSIZE),turn(0),market(Market()) {
+Environment::Environment():border(MAPSIZE,MAPSIZE),turn(0),market(Market()),governmentCashStorage(0) {
 	//Initialize window
 	window.setSize(sf::Vector2u(WIN_WIDTH, WIN_HEIGHT));
 	window.setTitle("Virtual-Village");
@@ -69,6 +69,7 @@ void Environment::update() {
 	updateState();
 	drawState(RENDER_INTERVAL);
 	turn++;
+	market.prepare();
 	updateAllEntities();
 	updateAllLocations();
 	market.update();
@@ -92,11 +93,42 @@ void Environment::updateAllEntities() {
 	for (int i = 0; i < size;i++) {
 		vec_Entities.at(index.at(i))->update();
 	}
+	for (int i = 0; i < size; i++) {
+		float taxAmount = 0.f;
+		if (vec_Entities.at(i)->income > 0) {
+			taxAmount = vec_Entities.at(i)->income * TAXRATE;
+		}
+		vec_Entities.at(i)->cash -= taxAmount;
+		governmentCashStorage += taxAmount;
+		if (vec_Entities.at(i)->cash < 0)
+			vec_Entities.at(i)->cash = 0;
+	}
+	sortEntityByCash();
+	int  compensation = governmentCashStorage / 5;
+	for (int i = 0; i <5 && i < vec_Entities.size(); i++)
+	{
+		vec_Entities.at(i) -> cash += compensation;
+		governmentCashStorage -= compensation;
+	}
 }
 void Environment::updateAllLocations(){
 	for (int i = 0; i < vec_Location.size(); i++)
 	{
 		vec_Location.at(i)->update();
+	}
+}
+
+void Environment::sortEntityByCash() {
+	int n = vec_Entities.size();
+	for (int i = 0; i < n - 1; ++i) {
+		for (int j = 0; j < n - i - 1; ++j) {
+			if (vec_Entities[j]->cash > vec_Entities[j + 1]->cash) {
+				// Swap the pointers
+				Entity* temp = vec_Entities[j];
+				vec_Entities[j] = vec_Entities[j + 1];
+				vec_Entities[j + 1] = temp;
+			}
+		}
 	}
 }
 
@@ -146,6 +178,25 @@ void Environment::drawState(int interval) {
 void Environment::updateState(){
 	setState(TURN, (float)this->turn);
 	setState(POPULATION, (float)this->vec_Entities.size());
+
+	int pp=0;
+	float baseAmountToSurvive = 0.f;
+	baseAmountToSurvive += this->market.avgPrice[0] * HUNGERDECAY_BASE/ 3 /NEED_RECOVERY;
+	baseAmountToSurvive += this->market.avgPrice[1] * HUNGERDECAY_BASE/ 3 /NEED_RECOVERY;
+	baseAmountToSurvive += this->market.avgPrice[5] * HUNGERDECAY_BASE/ 3 /NEED_RECOVERY;
+
+	baseAmountToSurvive += this->market.avgPrice[2] * TEMPERATUREDECAY_BASE / 2 /NEED_RECOVERY;
+	baseAmountToSurvive += this->market.avgPrice[3] * TEMPERATUREDECAY_BASE / 2 /NEED_RECOVERY;
+
+	baseAmountToSurvive += this->market.avgPrice[4] * THIRSTDECAY_BASE/NEED_RECOVERY;
+
+	baseAmountToSurvive *= 0.5;
+	for (int i = 0; i < this->vec_Entities.size(); i++)
+	{
+		if (vec_Entities.at(i)->income < baseAmountToSurvive&&vec_Entities.at(i)->cash < baseAmountToSurvive)
+			pp++;
+	}
+	setState(POVERTYRATE, pp/getState(POPULATION));
 }
 
 //Return the entity's position vector with the corresponding index

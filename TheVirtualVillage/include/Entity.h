@@ -26,6 +26,8 @@ public:
 	bool isBreeding;
 
 	friend class Market;
+	friend class Environment;
+	friend class Simulation;
 private:
 	Environment* p_Env;
 
@@ -46,7 +48,7 @@ private:
 	vector<int> vec_tal;
 
 	//State
-	int cash;
+	int cash, income;
 	int targetAge;
 	int age;
 

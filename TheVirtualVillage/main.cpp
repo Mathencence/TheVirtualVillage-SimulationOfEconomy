@@ -80,7 +80,6 @@ int main()
                 }
             }
         */
-        
         sim.getEnv()->update();
         elapsedTime = clock.restart();
         deltaTime = elapsedTime.asSeconds();
@@ -91,10 +90,17 @@ int main()
         updateFrameHistory(deltaTime, recentFrameTimes);
         //printf("TimeElapsed:%f", deltaTime);
 
-        if ((int)sim.getEnv()->getState(TURN)>TURNS_PERRUN) {
+        if ((int)sim.getEnv()->getState(TURN)>TURNS_PERRUN||sim.getEnv()->getState(POPULATION)==0) {
+            if(ISRECORDING_WEALTH)
+                sim.logWealthData();
             if (sim.startNewRun() < 0) {
-                sim.getEnv()->update();
-                sim.logData();
+                if (sim.getEnv()->getState(POPULATION) == 0) {
+                    sim.logData(true);
+                }
+                else
+                {
+                    sim.logData();
+                }
                 printf("Last run %d Completed\n", sim.currentRun - 1);
                 break;
             }
@@ -105,8 +111,8 @@ int main()
             }
         }
         if ((int)sim.getEnv()->getState(TURN) % LOG_INTERVAL == 0) {
-            sim.logData();
-
+            if(!ISRECORDING_WEALTH)
+                sim.logData();
             //Visaulize performance on console
             printf("Turn: %d ------- TurnPerSec: %f\n", (int)sim.getEnv()->getState(TURN),calculateAverageFrameRate(recentFrameTimes));
         }

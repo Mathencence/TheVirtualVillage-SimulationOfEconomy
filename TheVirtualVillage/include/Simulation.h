@@ -20,7 +20,8 @@ public:
 	~Simulation();
 	// Declare a function for updating the env state. Returns void and receives no parameters.
 	// void update();
-	void logData();
+	void logData(bool isExtincted = false);
+	void logWealthData();
 	// Declare a function for rendering the env to the screen. Returns void and receives no parameters.
 	// void render();
 	void consoleData(Gene g);
@@ -31,7 +32,9 @@ public:
 	sf::RenderWindow* getRW() { return rw; }
 	int currentRun;
 private:
-	float tempPopulation,tempStock[TYPELENGTH],tempPrice[TYPELENGTH];
+	float tempPopulation,tempStock[TYPELENGTH],tempPrice[TYPELENGTH]
+		,tempDemand[TYPELENGTH],tempSupply[TYPELENGTH], tempTPrice[TYPELENGTH]
+		,tempPovRate;
 	Environment* env;
 	sf::RenderWindow* rw;
 	const std::string pathOfLog = "./log/";

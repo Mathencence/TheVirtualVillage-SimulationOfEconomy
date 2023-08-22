@@ -19,6 +19,7 @@ enum location {
 enum state {
 	TURN,
 	POPULATION,
+	POVERTYRATE,
 	DATATYPE_LENGTH
 };
 class Entity;
@@ -56,8 +57,8 @@ private:
 	Vector border;
 	//Turn pass
 	int turn;
-
 	Market market;
+	int governmentCashStorage;
 	//Pointers of objects
 	std::vector<Entity*> vec_Entities;
 	std::vector<Location*> vec_Location;
@@ -65,6 +66,9 @@ private:
 	
 	void updateAllEntities();
 	void updateAllLocations();
+	//Utility
+	void sortEntityByCash();
+
 	//Graphics
 	void drawState(int interval);
 	
